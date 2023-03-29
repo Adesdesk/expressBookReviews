@@ -29,25 +29,41 @@ public_users.get('/isbn/:isbn',function (req, res) {
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
   const choiceAuthor = req.params.author;
-  const result = []; 
+  
   for (const key in books) {
     const book = books[key];
     if (book.author === choiceAuthor){
       res.send(book);
-      }
+    } 
   }
+  return res.status(300).json({message: "No such author was detected"});
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const choiceTitle = req.params.title;
+  
+  for (const key in books) {
+    const book = books[key];
+    if (book.title === choiceTitle){
+      res.send(book);
+    } 
+  }
+  return res.status(300).json({message: "No such book title was found"});
 });
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  for (const bookId in books) {
+    if (Object.prototype.hasOwnProperty.call(books, bookId)) {
+      const reviews = books[bookId].reviews;  
+      res.send(reviews);
+    } 
+  } 
+  
+  return res.status(300).json({message: "No reviews found"});
 });
 
 module.exports.general = public_users;
