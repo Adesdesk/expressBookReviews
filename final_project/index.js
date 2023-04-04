@@ -80,7 +80,7 @@ app.post("/login", (req,res) => {
         return res.status(404).json({message: "You are already registered!"});    
       }
     } 
-    return res.status(404).json({message: "Oops! couldn't to register user."});
+    return res.status(404).json({message: "Oops! couldn't register user."});
   });
  
 const PORT = 5000;

@@ -7,6 +7,16 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
   //Write your code here
+  const username = req.body.username;
+    const password = req.body.password;
+    if (username && password) {
+      if (!doesExist(username)) { 
+        users.push({"username":username,"password":password});
+        return res.status(200).json({message: "You just successfully registred. Now you can login"});
+      } else {
+        return res.status(404).json({message: "You are an already registered user!"});    
+      }
+    } 
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
@@ -53,7 +63,7 @@ public_users.get('/title/:title',function (req, res) {
   return res.status(300).json({message: "No such book title was found"});
 });
 
-//  Get book review
+//  Get book reviews by ISBN
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
   for (const bookId in books) {
