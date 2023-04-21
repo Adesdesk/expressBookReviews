@@ -6,23 +6,12 @@ const public_users = express.Router();
 const session = require('express-session')
 const jwt = require('jsonwebtoken');
 
-const doesExist = (username)=>{
-  let userswithsamename = users.filter((user)=>{
-    return user.username === username
-  });
-  if(userswithsamename.length > 0){
-    return true;
-  } else {
-    return false;
-  }
-}
-
 public_users.post("/register", (req,res) => {
   //Write your code here
   const username = req.body.username;
   const password = req.body.password;
   if (username && password) {
-    if (isValid(username) && !doesExist(username)) { 
+    if (!isValid(username)) {
       users.push({"username":username,"password":password});
       return res.status(200).json({message: "You just successfully registred. Now you can login"});
     } else {
