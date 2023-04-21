@@ -119,6 +119,33 @@ res.status(404).json(error);
 });*/
 
 // Get all books based on title
+public_users.get('/title/:title', function (req, res) {
+  const choiceTitle = req.params.title;
+  let foundBook = null;
+
+  new Promise((resolve, reject) => {
+    for (const key in books) {
+      const book = books[key];
+      if (book.title === choiceTitle){
+        foundBook = book;
+        break;
+      }
+    }
+    if (foundBook) {
+      resolve(foundBook);
+    } else {
+      reject(new Error("No such book title was found"));
+    }
+  })
+  .then((book) => {
+    res.send(book);
+  })
+  .catch((error) => {
+    return res.status(300).json({ message: error.message });
+  });
+});
+
+/*
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
   const choiceTitle = req.params.title;
@@ -130,28 +157,10 @@ public_users.get('/title/:title',function (req, res) {
     } 
   }
   return res.status(300).json({message: "No such book title was found"});
-});
+});*/
 
 //  Get book reviews by ISBN
-public_users.get('/review/:isbn', function(req, res) {
-  let promise = new Promise((resolve, reject) => {
-  for (const bookId in books) {
-  if (Object.prototype.hasOwnProperty.call(books, bookId)) {
-  const reviews = books[bookId].reviews;
-  resolve(reviews);
-  }
-  }
-  reject({message: "No reviews found"});
-  });
-  
-  promise.then((reviews) => {
-  res.send(reviews);
-  }).catch((err) => {
-  res.status(300).json(err);
-  });
-  });
-
-/*public_users.get('/review/:isbn',function (req, res) {
+public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
   for (const bookId in books) {
     if (Object.prototype.hasOwnProperty.call(books, bookId)) {
@@ -161,6 +170,6 @@ public_users.get('/review/:isbn', function(req, res) {
   } 
   
   return res.status(300).json({message: "No reviews found"});
-});*/
+});
 
 module.exports.general = public_users;
