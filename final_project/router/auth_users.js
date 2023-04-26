@@ -29,7 +29,7 @@ if(validusers.length > 0){
 }
 };
 
-//only registered users can login
+//Task 7: only registered users can login
 regd_users.post("/login", (req,res) => {
   const username = req.body.username;
 const password = req.body.password;
@@ -56,7 +56,7 @@ else if (authenticatedUser(username, password)){
 });
 // tested in postman using http://localhost:5000/customer/login
 
-// Adding a book review
+// Task 8: Adding a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   const review = req.query.review;
   const isbn = req.params.isbn;
@@ -76,7 +76,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 });
 // tested in postman using http://localhost:5000/customer/auth/review/3?review=This%20book%20is%20great
 
-// deleting a book review
+//Task 9: deleting a book review
 regd_users.delete("/auth/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const username = req.session.authorization["username"];  
