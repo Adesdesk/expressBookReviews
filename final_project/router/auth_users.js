@@ -47,7 +47,7 @@ else if (authenticatedUser(username, password)){
     accessToken,
           username,
   }
-  return res.status(200).send('User successfully logged in')
+  return res.status(200).send('Customer successfully logged in')
 }
   else {
       console.log('Check3');
@@ -60,51 +60,42 @@ else if (authenticatedUser(username, password)){
 regd_users.put("/auth/review/:isbn", (req, res) => {
   const review = req.query.review;
   const isbn = req.params.isbn;
-  const username = req.session.authorization["username"];
-  
+  const username = req.session.authorization["username"];  
   // Check if user is authenticated
   if (!username) {
     return res.status(401).json({ message: "You are an unauthorized user" });
   }
-
   // Check if the book with the given ISBN exists
   if (!books[isbn]) {
     return res.status(404).json({ message: "Book not found" });
   }
-
   // Add or modify the review for the book
   books[isbn].reviews[username] = review;
-
-  // Return the updated book object
-  return res.json(books[isbn]);
+  // Return the updated book review prompt
+  return res.status(208).json({message: 'The review for the book with ISBN ' + isbn + " has been added"})
 });
 // tested in postman using http://localhost:5000/customer/auth/review/3?review=This%20book%20is%20great
 
 // deleting a book review
 regd_users.delete("/auth/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
-  const username = req.session.authorization["username"];
-  
+  const username = req.session.authorization["username"];  
   // Check if user is authenticated
   if (!username) {
     return res.status(401).json({ message: "You are an unauthorized user" });
   }
-
   // Check if the book with the given ISBN exists
   if (!books[isbn]) {
     return res.status(404).json({ message: "No such book was found" });
   }
-
   // Check if the user has previously reviewed the book
   if (!books[isbn].reviews[username]) {
     return res.status(404).json({ message: "You have no reviews to delete" });
   }
-
   // Delete the user's review for the book
   delete books[isbn].reviews[username];
-
-  // Return the updated book object
-  return res.json(books[isbn]);
+  // Return the book deletion prompt
+  return res.status(208).json({message: 'Review for the book with ISBN ' + isbn + " posted by " + username + " has been deleted."})
 });
 // tested in postman using http://localhost:5000/customer/auth/review/3
 
