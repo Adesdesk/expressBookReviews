@@ -29,18 +29,17 @@ public_users.get('/',function (req, res) {
 
 // Task 10:
 // Add the code for getting the list of books available in the shop (done in Task 1) using Promise callbacks or async-await with Axios.
-public_users.get('/', (req, res) => {
-  axios.get('http://localhost:5000/')
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((err) => {
-      res.status(404).json({
-        success: false,
-        message: "No books retrieved",
-        error: err
-      });
+public_users.get('/', async (req, res) => {
+  try {
+    const response = await axios.get('http://localhost:5000/');
+    res.send(response.data);
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "No books retrieved",
+      error: err
     });
+  }
 });
 
 
@@ -89,7 +88,7 @@ public_users.get('/author/:author', async (req, res) => {
   }
 });
 
-// Task 13:
+
 // Task 4: Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
@@ -103,6 +102,7 @@ public_users.get('/title/:title',function (req, res) {
   return res.status(200).json(resultt);
 });
 
+// Task 13:
 // Add the code for getting the book details based on Title (done in Task 4) using Promise callbacks or async-await with Axios.
 public_users.get('/title/:title', async (req, res) => {
   try {
