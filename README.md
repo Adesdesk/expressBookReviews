@@ -21,6 +21,7 @@ git clone https://github.com/Adesdesk/expressBookReviews.git
 
 ```
 cd expressBookReviews/final_project
+
 npm install
 ```
 
@@ -42,6 +43,7 @@ npm start
 Contributor(s) names and contact info
 
 Name: Adeola David A.
+
 Email: adesdesk@outlook.com
 
 
